@@ -36,6 +36,9 @@
   - ペットの採用時に採用費として0.005ETH支払うこと
   - 支払った採用費の総額をETH単位で表示させること
 
+<img width="1413" alt="スクリーンショット 2022-07-09 14 56 54" src="https://user-images.githubusercontent.com/38268537/178093694-a09bb403-939c-490f-b985-edf3b2cc1323.png">
+
+
 ## 環境
   - solidityのバージョン: 0.5.0
   - ローカルで使用するブロックチェーン: Eth用のGanache
