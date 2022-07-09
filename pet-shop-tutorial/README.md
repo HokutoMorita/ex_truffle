@@ -45,6 +45,7 @@
 ### npmコマンドが使えない場合
   - どんな方法でもいいのでまずは nodeenvコマンドをインストールしてください
     - 参考: https://qiita.com/masakuni-ito/items/1ea015eea03ef4b95c72
+  - nodeenvコマンドをインストールは、下記のコマンドを実行してnpmコマンドを使用できるようにしてください
 ```sh
 # nodenvでnode.jsをバージョンを指定してインストール
 nodenv install -l
