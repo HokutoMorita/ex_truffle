@@ -43,9 +43,12 @@ App = {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
     web3 = new Web3(App.web3Provider);
-
-    App.selectedAddress = web3.eth.defaultAccount;
-
+    web3.eth.getAccounts(async function(error, accounts) {
+      if (error) {
+        throw error;
+      }
+      App.selectedAddress = accounts[0];
+    });
     return App.initContract();
   },
 
@@ -73,51 +76,43 @@ App = {
     try {
       const adoptionInstance = await App.contracts.Adoption.deployed();
 
+      // アカウントアドレスの表示
+      const currentAccountAdressText = "Current account adress is : " + App.selectedAddress;
+      $('#currentAccountAdress').text(currentAccountAdressText);
+
+      // アカウントごとの支払い総額表示
+      const etherUnit = 1000000000000000000;
+      const totalAmount = await adoptionInstance.getTotalAmount.call({from: App.selectedAddress});
+      const totalAmountText = "Pet's Recruitment total costs: " + (totalAmount / etherUnit) + " ETH";
+      $('#totalCosts').text(totalAmountText);
+
+      // ペット一覧の採用状況の更新
       const adopters = await adoptionInstance.getAdopters.call();
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
           $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
         }
       }
-      const etherUnit = 1000000000000000000;
-      const totalAmount = await adoptionInstance.getTotalAmount.call();
-      const totalAmountText = "Pet's Recruitment total costs: " + (totalAmount / etherUnit) + " ETH";
-      $('#totalCosts').text(totalAmountText);
-
     } catch(err) {
       console.log(err.message);
     }
     
   },
 
-  handleAdopt: function(event) {
+  handleAdopt: async function(event) {
     event.preventDefault();
 
     var petId = parseInt($(event.target).data('id'));
-    console.log("ペットIDの確認: " + petId);
+    const petPrice = 5000000000000000;
 
-    web3.eth.getAccounts(async function(error, accounts) {
-      if (error) {
-        throw error;
-      }
-
-      if (accounts.includes(App.selectedAddress)) {
-        throw "不正なアカウントです"
-      }
-
-      var account = accounts[0];
-      console.log("Accountの確認: " + account);
-      const petPrice = 5000000000000000;
-
-      try {
-        const adoptionInstance = await App.contracts.Adoption.deployed();
-        // 0.005 ETH
-        await adoptionInstance.adopt(petId, {from: account, value: petPrice});
-      } catch(err) {
-        console.log(err.message);
-      }
-      return App.markAdopted();
-    });
+    try {
+      const adoptionInstance = await App.contracts.Adoption.deployed();
+      // 0.005 ETH
+      await adoptionInstance.adopt(petId, {from: App.selectedAddress, value: petPrice});
+    } catch(err) {
+      console.log(err.message);
+    }
+    return await App.markAdopted();
   }
 
 };
@@ -127,7 +122,7 @@ $(function() {
     App.init();
 
     web3.currentProvider.on('accountsChanged', (accounts) => {
-      console.log(accounts[0]);
+      App.selectedAddress = accounts[0];
       App.markAdopted();
     });
   });
