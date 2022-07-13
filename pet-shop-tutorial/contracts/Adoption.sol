@@ -5,16 +5,16 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
 // 採用コントラクト
 contract Adoption is Ownable {
     address[16] public adopters;
-    uint256 private totalAmount;
     uint256 private floorPrice = 0.005 ether;
-    // uint256 private floorPrice = 5000000000000000;
+    
+    mapping (address => uint256) private totalAmounts;
 
     // Adoptiong a pet
-    function adopt(uint petId) public payable onlyOwner returns (uint) {
+    function adopt(uint petId) public payable returns (uint) {
         require(petId >= 0 && petId <= 15);
         require(msg.value >= floorPrice);
         adopters[petId] = msg.sender;
-        totalAmount += msg.value;
+        totalAmounts[msg.sender] += msg.value;
         return petId;
     }
 
@@ -23,7 +23,7 @@ contract Adoption is Ownable {
         return adopters;
     }
 
-    function getTotalAmount() public view onlyOwner returns (uint) {
-        return totalAmount;
+    function getTotalAmount() public view returns (uint) {
+        return totalAmounts[msg.sender];
     }
 }
