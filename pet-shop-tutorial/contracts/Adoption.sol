@@ -1,9 +1,7 @@
-pragma solidity ^0.5.0;
-
-import "@openzeppelin/contracts/ownership/Ownable.sol";
+pragma solidity ^0.8.0;
 
 // 採用コントラクト
-contract Adoption is Ownable {
+contract Adoption {
     address[16] public adopters;
     uint256 private floorPrice = 0.005 ether;
     
