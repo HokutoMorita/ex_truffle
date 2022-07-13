@@ -1,6 +1,7 @@
 App = {
   web3Provider: null,
   contracts: {},
+  selectedAddress: null,
 
   init: async function() {
     // Load pets.
@@ -42,6 +43,8 @@ App = {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
     web3 = new Web3(App.web3Provider);
+
+    App.selectedAddress = web3.eth.defaultAccount;
 
     return App.initContract();
   },
@@ -95,8 +98,13 @@ App = {
 
     web3.eth.getAccounts(async function(error, accounts) {
       if (error) {
-        console.log(error);
+        throw error;
       }
+
+      if (accounts.includes(App.selectedAddress)) {
+        throw "不正なアカウントです"
+      }
+
       var account = accounts[0];
       console.log("Accountの確認: " + account);
       const petPrice = 5000000000000000;
@@ -117,5 +125,10 @@ App = {
 $(function() {
   $(window).load(function() {
     App.init();
+
+    web3.currentProvider.on('accountsChanged', (accounts) => {
+      console.log(accounts[0]);
+      App.markAdopted();
+    });
   });
 });
