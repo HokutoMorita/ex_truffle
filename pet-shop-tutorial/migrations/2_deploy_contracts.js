@@ -1,5 +1,9 @@
-var Adoption = artifacts.require("Adoption");
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
 
-module.exports = function(deployer) {
+var Adoption = artifacts.require("Adoption");
+const floorPrice = web3.utils.toWei("0.005", "ether");
+
+module.exports = async function(deployer) {
     deployer.deploy(Adoption);
+    await deployProxy(Adoption, [floorPrice], { deployer, initializer: 'initialize' });
 };
