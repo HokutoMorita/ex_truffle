@@ -12,7 +12,7 @@ contract('AdoptionV2 (proxy)', function (accounts) {
 
     before(async function () {
         adoption = await deployProxy(Adoption, [floorPrice], { initializer: 'initialize' });
-        adoptionV2 = await upgradeProxy(adoption.address, AdoptionV2, [floorPrice], { initializer: 'initialize' } );
+        adoptionV2 = await upgradeProxy(adoption.address, AdoptionV2);
     });
 
     it('フロアプライスの価格を確認', async function () {
