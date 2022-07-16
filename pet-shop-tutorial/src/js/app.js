@@ -53,7 +53,7 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('Adoption.json', function(data) {
+    $.getJSON('AdoptionV2.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with @truffle/contract
       var AdoptionArtifact = data;
       App.contracts.Adoption = TruffleContract(AdoptionArtifact);
@@ -85,6 +85,11 @@ App = {
       const totalAmount = await adoptionInstance.getTotalAmount.call({from: App.selectedAddress});
       const totalAmountText = "Pet's Recruitment total costs: " + (totalAmount / etherUnit) + " ETH";
       $('#totalCosts').text(totalAmountText);
+
+      // フロアプライスの表示
+      const floorPrice = await adoptionInstance.getFloorPrice.call({from: App.selectedAddress});
+      const floorPriceText = "FloorPrice: " + (floorPrice / etherUnit) + " ETH";
+      $('#floorPrice').text(floorPriceText);
 
       // ペット一覧の採用状況の更新
       const adopters = await adoptionInstance.getAdopters.call();
