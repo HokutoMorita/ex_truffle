@@ -107,6 +107,21 @@ npm run dev
 ## npm公式資料
   - openzeppelin
     - https://www.npmjs.com/package/@openzeppelin/contracts/v/2.3.0
+## OpenZeppelinの公式資料
+  - https://docs.openzeppelin.com/contracts/4.x/
+  - `Upgratable対応`Proxies
+    - https://docs.openzeppelin.com/contracts/4.x/api/proxy
+    - https://docs.openzeppelin.com/contracts/4.x/api/proxy#UUPSUpgradeable
+    - `Initializeインターフェースの実装の参考にできる`https://docs.openzeppelin.com/learn/upgrading-smart-contracts#initialization
+  - `スマートコントラクトのジェネレータ`スマートコントラクトUpgratabilityなどの設定ができるようになる
+    - https://wizard.openzeppelin.com/#erc20
+  - OpenZeppelin Truffle Upgrades API
+    - https://docs.openzeppelin.com/upgrades-plugins/1.x/api-truffle-upgrades
+  - `参考になる`OpenZeppelin Upgrades: Step by Step Tutorial for Truffle
+    - https://forum.openzeppelin.com/t/openzeppelin-upgrades-step-by-step-tutorial-for-truffle/3579
+## web3.js公式資料
+ - 公式リファレンス
+   - https://web3js.readthedocs.io/en/v1.7.4/
 ## 参考資料
   - 【Solidity】Payable関数とWithdraw関数
     - https://qiita.com/ryu-yama/items/4c37d5ff0fbc5364e569
