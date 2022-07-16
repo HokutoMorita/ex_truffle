@@ -10,7 +10,7 @@ contract('Adoption (proxy)', function (accounts) {
     const floorPrice = web3.utils.toWei("0.005", "ether");
 
     before(async function () {
-        adoption = await deployProxy(Adoption, [floorPrice], {initializer: 'initialize'});
+        adoption = await deployProxy(Adoption, [floorPrice], { initializer: 'initialize' });
         await adoption.adopt(8, { from: accounts[0], value: floorPrice });
         expectedAdopter = accounts[0];
     });
