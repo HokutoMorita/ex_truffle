@@ -4,9 +4,11 @@ const Adoption = artifacts.require("Adoption");
 contract("Adoption", (accounts) => {
     let adoption;
     let expectedAdopter;
+    const floorPrice = web3.utils.toWei("0.005", "ether");
 
     before(async () => {
         adoption = await Adoption.new();
+        adoption.initialize(floorPrice);
     });
 
     describe("Adoptionコントラクトの挙動確認テスト", async () => {
