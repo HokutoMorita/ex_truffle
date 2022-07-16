@@ -1,16 +1,22 @@
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
 // 採用コントラクト
-contract Adoption {
+contract Adoption is Initializable {
     address[16] public adopters;
-    uint256 private floorPrice = 0.005 ether;
+    uint256 private _floorPrice;
     
     mapping (address => uint256) private totalAmounts;
+
+    function initialize(uint256 floorPrice) public initializer {
+        _floorPrice = floorPrice;
+    }
 
     // Adoptiong a pet
     function adopt(uint petId) public payable returns (uint) {
         require(petId >= 0 && petId <= 15);
-        require(msg.value >= floorPrice);
+        require(msg.value >= _floorPrice);
         adopters[petId] = msg.sender;
         totalAmounts[msg.sender] += msg.value;
         return petId;
