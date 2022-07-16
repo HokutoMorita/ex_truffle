@@ -11,6 +11,11 @@
   - `pet-shop-tutorial/.openzeppelin`ディレクトリにjson形式で管理する
     - 開発用のブロックチェーンネットワークのプロキシは各自で管理するため、gitの管理下から外す
     - しかし、メインネットなどのプロキシはgitの管理下におくこと
+### プロキシの参考
+https://docs.openzeppelin.com/upgrades-plugins/1.x/#how-plugins-work
+>The plugins will keep track of all the implementation contracts you have deployed in an .openzeppelin folder in the project root, as well as the proxy admin. You will find one file per network there. It is advised that you commit to source control the files for all networks except the development ones (you may see them as .openzeppelin/unknown-*.json).
+
+
 ## アプリの内容
   - 作るシステム
     - ペットショップの里親追跡システム
