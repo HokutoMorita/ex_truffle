@@ -30,4 +30,8 @@ contract AdoptionV2 is Initializable {
     function getTotalAmount() public view returns (uint) {
         return totalAmounts[msg.sender];
     }
+
+    function getFloorPrice() public view returns (uint) {
+        return _floorPrice;
+    }
 }

@@ -8,7 +8,7 @@ contract("Adoption", (accounts) => {
 
     before(async () => {
         adoption = await Adoption.new();
-        adoption.initialize(floorPrice);
+        await adoption.initialize(floorPrice);
     });
 
     describe("Adoptionコントラクトの挙動確認テスト", async () => {
