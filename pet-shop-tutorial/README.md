@@ -10,6 +10,7 @@
 ## プロキシの管理について
   - `pet-shop-tutorial/.openzeppelin`ディレクトリにjson形式で管理する
     - 開発用のブロックチェーンネットワークのプロキシは各自で管理するため、gitの管理下から外す
+      - 参考: https://docs.openzeppelin.com/upgrades-plugins/1.x/network-files#configuration-files-in-version-control
     - しかし、メインネットなどのプロキシはgitの管理下におくこと
 ### プロキシ管理ファイルの扱いについて参考
 https://docs.openzeppelin.com/upgrades-plugins/1.x/#how-plugins-work

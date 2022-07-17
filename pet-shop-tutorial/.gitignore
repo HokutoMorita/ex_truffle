@@ -1,1 +1,3 @@
-.openzeppelin/
+# OpenZeppelin
+## 開発用のブロックチェーンネットワークはgitの管理下から外す
+.openzeppelin/unknown-*.json 
