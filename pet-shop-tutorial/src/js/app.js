@@ -53,7 +53,7 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('AdoptionV2.json', function(data) {
+    $.getJSON('AdoptionV3.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with @truffle/contract
       var AdoptionArtifact = data;
       App.contracts.Adoption = TruffleContract(AdoptionArtifact);
@@ -82,14 +82,19 @@ App = {
 
       // アカウントごとの支払い総額表示
       const etherUnit = 1000000000000000000;
-      const totalAmount = await adoptionInstance.getTotalAmount.call({from: App.selectedAddress});
+      const totalAmount = await adoptionInstance.getTotalAmount.call({ from: App.selectedAddress });
       const totalAmountText = "Pet's Recruitment total costs: " + (totalAmount / etherUnit) + " ETH";
       $('#totalCosts').text(totalAmountText);
 
       // フロアプライスの表示
-      const floorPrice = await adoptionInstance.getFloorPrice.call({from: App.selectedAddress});
+      const floorPrice = await adoptionInstance.getFloorPrice.call({ from: App.selectedAddress });
       const floorPriceText = "FloorPrice: " + (floorPrice / etherUnit) + " ETH";
       $('#floorPrice').text(floorPriceText);
+
+      // フロアプライス2の表示
+      const floorPrice2 = await adoptionInstance.getFloorPrice2.call({ from: App.selectedAddress });
+      const floorPrice2Text = "FloorPrice 2: " + (floorPrice2 / etherUnit) + " ETH";
+      $('#floorPrice2').text(floorPrice2Text);
 
       // ペット一覧の採用状況の更新
       const adopters = await adoptionInstance.getAdopters.call();
@@ -109,11 +114,13 @@ App = {
 
     var petId = parseInt($(event.target).data('id'));
     const petPrice = 5000000000000000;
+    const floorPrice = 5000000000000000;
 
     try {
       const adoptionInstance = await App.contracts.Adoption.deployed();
       // 0.005 ETH
-      await adoptionInstance.adopt(petId, {from: App.selectedAddress, value: petPrice});
+      await adoptionInstance.adopt(petId, { from: App.selectedAddress, value: petPrice });
+      await adoptionInstance.setFloorPrice2(floorPrice, { from: App.selectedAddress });
     } catch(err) {
       console.log(err.message);
     }
