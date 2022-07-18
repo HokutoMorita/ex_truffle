@@ -120,7 +120,6 @@ App = {
       const adoptionInstance = await App.contracts.Adoption.deployed();
       // 0.005 ETH
       await adoptionInstance.adopt(petId, { from: App.selectedAddress, value: petPrice });
-      await adoptionInstance.setFloorPrice2(floorPrice, { from: App.selectedAddress });
     } catch(err) {
       console.log(err.message);
     }

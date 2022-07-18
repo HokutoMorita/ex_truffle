@@ -15,12 +15,10 @@ contract('AdoptionV3 (proxy)', function () {
     before(async function () {
         adoption = await deployProxy(Adoption, [floorPrice], { initializer: 'initialize' });
         adoptionV2 = await upgradeProxy(adoption.address, AdoptionV2);
-        adoptionV3 = await upgradeProxy(adoptionV2.address, AdoptionV3);
+        adoptionV3 = await upgradeProxy(adoptionV2.address, AdoptionV3, { call: { fn: 'setFloorPrice2', args: [floorPrice] } });
     });
 
     it('フロアプライス2の価格を確認', async function () {
-        await adoptionV3.setFloorPrice2(floorPrice);
-
         const expectedFloorPrice2 = web3.utils.toWei("0.01", "ether");
         const actualFloorPrice2 = await adoptionV3.getFloorPrice2();
         expect(actualFloorPrice2.toString()).to.equal(expectedFloorPrice2.toString());
