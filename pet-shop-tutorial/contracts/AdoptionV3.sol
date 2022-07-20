@@ -1,17 +1,25 @@
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 // 採用コントラクト
-contract AdoptionV3 is Initializable {
+contract AdoptionV3 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     address[16] public adopters;
     uint256 private _floorPrice;
     mapping (address => uint256) private totalAmounts;
     uint256 private _floorPrice2;
 
     function initialize(uint256 floorPrice2) public initializer {
+        // UUPSは、実装コントラクト側でアップグレードをおこないます
+        // そのため、アップグレードを実行できるのをOwnerに絞り込む必要があります
+        __Ownable_init();
+        __UUPSUpgradeable_init();
         _floorPrice2 = floorPrice2 * 2;
     }
+
+    function _authorizeUpgrade(address) internal override onlyOwner {}
 
     // Adoptiong a pet
     function adopt(uint petId) public payable returns (uint) {

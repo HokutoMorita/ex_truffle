@@ -11,7 +11,7 @@ contract('AdoptionV2 (proxy)', function (accounts) {
     const floorPrice = web3.utils.toWei("0.005", "ether");
 
     before(async function () {
-        adoption = await deployProxy(Adoption, [floorPrice], { initializer: 'initialize' });
+        adoption = await deployProxy(Adoption, [floorPrice], { kind: 'uups', initializer: 'initialize' });
         adoptionV2 = await upgradeProxy(adoption.address, AdoptionV2);
     });
 
