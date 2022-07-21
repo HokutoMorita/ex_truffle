@@ -114,7 +114,6 @@ App = {
 
     var petId = parseInt($(event.target).data('id'));
     const petPrice = 5000000000000000;
-    const floorPrice = 5000000000000000;
 
     try {
       const adoptionInstance = await App.contracts.Adoption.deployed();
